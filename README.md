@@ -6,6 +6,3 @@ Install using npm with `npm install --save react-native-mediaplayer`. React Nati
 
 ## Usage
 Usage goes here
-
-## License
-MIT, for more information see `LICENSE`
