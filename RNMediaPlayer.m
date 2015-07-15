@@ -39,21 +39,25 @@ RCT_EXPORT_METHOD(open:(NSDictionary *)options)
   // refactor: implement an option to load network asset instead
   NSURL *fileURL = [NSURL fileURLWithPath:mediaFilePath];
   
-  AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
+  dispatch_async(dispatch_get_main_queue(), ^{
   
-  playerViewController.player = [AVPlayer playerWithURL:fileURL];
-  
-  // autoplay
-  [playerViewController.player play];
+    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
+    
+    playerViewController.player = [AVPlayer playerWithURL:fileURL];
+    
+    // autoplay
+    [playerViewController.player play];
 
-  _playerViewcontroller = playerViewController;
+    _playerViewcontroller = playerViewController;
 
-  UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-  UIView *view = [ctrl view];
+    UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    UIView *view = [ctrl view];
 
-  view.window.windowLevel = UIWindowLevelStatusBar;
-  
-  [ctrl presentViewController:playerViewController animated:TRUE completion: nil];
+    view.window.windowLevel = UIWindowLevelStatusBar;
+    
+    [ctrl presentViewController:playerViewController animated:TRUE completion: nil];
+    
+  })
 }
 
 @end
