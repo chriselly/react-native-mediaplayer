@@ -57,7 +57,7 @@ RCT_EXPORT_METHOD(open:(NSDictionary *)options)
     
     [ctrl presentViewController:playerViewController animated:TRUE completion: nil];
     
-  })
+  });
 }
 
 @end
