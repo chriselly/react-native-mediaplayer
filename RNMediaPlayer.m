@@ -24,25 +24,18 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(open:(NSDictionary *)options)
 {
-  // this method can receive the following options
-  //
-  // uri: STRING (full resource name with file extension)
-  //
-  // missing: option to disable autoplay
 
   _uri = [options objectForKey:@"uri"];
 
-  NSString* mediaFilePath = [[NSBundle mainBundle] pathForResource:_uri ofType:nil];
-  NSAssert(mediaFilePath, @"Media not found: %@", _uri);
+  NSString *encodedString = [_uri stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+  NSURL *myURL = [[NSURL alloc] initWithString:encodedString];
 
-  // refactor: implement an option to load network asset instead
-  NSURL *fileURL = [NSURL fileURLWithPath:mediaFilePath];
 
   dispatch_async(dispatch_get_main_queue(), ^{
 
     AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
 
-    playerViewController.player = [AVPlayer playerWithURL:fileURL];
+    playerViewController.player = [AVPlayer playerWithURL: myURL];
 
     // autoplay
     [playerViewController.player play];
